@@ -42,7 +42,7 @@ public class UIHandler : MonoBehaviour
     public void Pause()
     {
         pauseMenu.SetActive(true);
-        LeanTween.scale(pauseMenu, new Vector3(1.1f, 1.1f, 1.1f), 0.7f).setIgnoreTimeScale(true);
+        LeanTween.scale(pauseMenu, new Vector3(1f, 1f, 1f), 0.7f).setIgnoreTimeScale(true);
 		Time.timeScale = 0;
 	}
     public void UnPause()
