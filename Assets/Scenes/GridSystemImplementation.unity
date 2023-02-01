@@ -454,6 +454,8 @@ MonoBehaviour:
   uihandler: {fileID: 84990108}
   numberOfRedPawns: 9
   numberOfGreenPawns: 9
+  numberOfPawnsRedCaptured: 0
+  numberOfPawnsGreenCaptured: 0
   canKill: 1
   positionsOfButtons:
   - {fileID: 1606376273}
@@ -513,12 +515,13 @@ MonoBehaviour:
   pauseMenu: {fileID: 8753601874944356018}
   musicOn: {fileID: 8753601873889851489}
   musicOff: {fileID: 8753601873799579862}
-  Triara: {fileID: 362196660}
+  StateGameObject: {fileID: 362196660}
   music: {fileID: 617317268}
+  InfoAboutMovesAndCaptures: {fileID: 1672203681}
   musicPlaying: 1
   currentPlayerText: {fileID: 1759992218}
-  redPawnsLeftText: {fileID: 365670561}
-  greenPawnsLeftText: {fileID: 2054150829}
+  redPawnsLeftTextAndCaptured: {fileID: 365670561}
+  greenPawnsLeftTextAndCaptured: {fileID: 2054150829}
 --- !u!1001 &124995969
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1468,7 +1471,7 @@ GameObject:
   - component: {fileID: 362196663}
   - component: {fileID: 362196662}
   m_Layer: 5
-  m_Name: Triara PopUp
+  m_Name: StatePopUp(Triara Winner)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1491,8 +1494,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 298.32, y: 88}
-  m_SizeDelta: {x: 596.6328, y: 99.5791}
+  m_AnchoredPosition: {x: 251.36249, y: 5.2092896}
+  m_SizeDelta: {x: 871.4209, y: 231.17}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &362196662
 MonoBehaviour:
@@ -1541,8 +1544,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 244.61
-  m_fontSizeBase: 244.61
+  m_fontSize: 200.08
+  m_fontSizeBase: 200.08
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -4679,7 +4682,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000030517578}
+  m_AnchoredPosition: {x: 0, y: -0.000061035156}
   m_SizeDelta: {x: -466.07, y: -180}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1606376273 stripped
@@ -4858,7 +4861,7 @@ GameObject:
   - component: {fileID: 1672203682}
   - component: {fileID: 1672203681}
   m_Layer: 5
-  m_Name: PlayerTurnText (1)
+  m_Name: InformationText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5021,7 +5024,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 5.2093}
+  m_AnchoredPosition: {x: 0, y: 5.2092896}
   m_SizeDelta: {x: 0, y: 231.1698}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1708971379

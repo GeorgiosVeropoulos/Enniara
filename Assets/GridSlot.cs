@@ -66,14 +66,16 @@ public class GridSlot : MonoBehaviour, IDropHandler, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        
-        if(transform.childCount == 0 && gameControllerMaster.state == GameControllerMaster.State.placing)
+			
+
+
+		if (transform.childCount == 0 && gameControllerMaster.state == GameControllerMaster.State.placing)
         {
-            if (gameControllerMaster.numberOfRedPawns == 0 && gameControllerMaster.numberOfGreenPawns == 0)
-            {
-                gameControllerMaster.state = GameControllerMaster.State.playing;
-				return;
-			}
+   //         if (gameControllerMaster.numberOfRedPawns == 0 && gameControllerMaster.numberOfGreenPawns == 0)
+   //         {
+   //             gameControllerMaster.state = GameControllerMaster.State.playing;
+			//	return;
+			//}
                
             
             if(gameControllerMaster.side == GameControllerMaster.Side.Red)
@@ -82,6 +84,8 @@ public class GridSlot : MonoBehaviour, IDropHandler, IPointerClickHandler
 				go.transform.SetParent(this.transform);
 				gameControllerMaster.RedPawnsMinusOne();
 				gameControllerMaster.ChangeSide();
+                gameControllerMaster.CheckToChangeToPlaying();
+                
 			}
             else
             {
@@ -89,6 +93,8 @@ public class GridSlot : MonoBehaviour, IDropHandler, IPointerClickHandler
 				go.transform.SetParent(this.transform);
 				gameControllerMaster.GreenPawnsMinusOne();
 				gameControllerMaster.ChangeSide();
+				gameControllerMaster.CheckToChangeToPlaying();
+                
 			}
 
 
@@ -104,6 +110,7 @@ public class GridSlot : MonoBehaviour, IDropHandler, IPointerClickHandler
                 Destroy(this.gameObject.transform.GetChild(0).gameObject);
                 gameControllerMaster.redDidTriara = false;
 				gameControllerMaster.state = GameControllerMaster.State.playing;
+                gameControllerMaster.PawnsCapturedByRed();
 				gameControllerMaster.ChangeSide();
 			}
             if(gameControllerMaster.greenDidTriara == true &&
@@ -112,10 +119,12 @@ public class GridSlot : MonoBehaviour, IDropHandler, IPointerClickHandler
 				Destroy(this.gameObject.transform.GetChild(0).gameObject);
 				gameControllerMaster.greenDidTriara = false;
 				gameControllerMaster.state = GameControllerMaster.State.playing;
+				gameControllerMaster.PawnsCapturedByGreen();
 				gameControllerMaster.ChangeSide();
 			}
 
-            gameControllerMaster.uihandler.TriaraPopUp(0);
+            gameControllerMaster.uihandler.StatePopUp(0);
+            gameControllerMaster.CheckWinner();
         }
 
 	} 

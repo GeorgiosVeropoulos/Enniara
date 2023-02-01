@@ -9,19 +9,21 @@ public class UIHandler : MonoBehaviour
     public GameObject pauseMenu;
     public GameObject musicOn;
     public GameObject musicOff;
-    public GameObject Triara;
+    public GameObject StateGameObject;
     public AudioSource music;
-    
+    public TextMeshProUGUI InfoAboutMovesAndCaptures;
+
     public bool musicPlaying = true;
 
     public TextMeshProUGUI currentPlayerText;
-    public TextMeshProUGUI redPawnsLeftText;
-	public TextMeshProUGUI greenPawnsLeftText;
+    public TextMeshProUGUI redPawnsLeftTextAndCaptured;
+	public TextMeshProUGUI greenPawnsLeftTextAndCaptured;
 
     // Start is called before the first frame update
     void Start()
     {
-		LeanTween.scale(Triara, new Vector2(0, 0), 0).setIgnoreTimeScale(true);
+        InfoAboutMovesAndCaptures.text = "Moves Left:";
+		LeanTween.scale(StateGameObject, new Vector2(0, 0), 0).setIgnoreTimeScale(true);
 		musicOff.SetActive(false);
         pauseMenu.SetActive(false);
         LeanTween.scale(pauseMenu, new Vector2(0, 0), 0);
@@ -29,14 +31,12 @@ public class UIHandler : MonoBehaviour
         currentPlayerText.color = Color.red;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void ChangeInformationText() {
+        InfoAboutMovesAndCaptures.text = "Score:";
     }
-    public void TriaraPopUp(float xyz)
+    public void StatePopUp(float xyz)
     {
-        LeanTween.scale(Triara, new Vector3(xyz, xyz, xyz), 0.3f).setIgnoreTimeScale(true);
+        LeanTween.scale(StateGameObject, new Vector3(xyz, xyz, xyz), 0.3f).setIgnoreTimeScale(true);
     }
 
     public void Pause()
@@ -90,12 +90,27 @@ public class UIHandler : MonoBehaviour
 		currentPlayerText.text = "Green";
 		currentPlayerText.color = Color.green;
 	}
-    public void GreenPawnsLeft()
+    public void GreenPawnsCounter()
     {
-		greenPawnsLeftText.text = gameController.numberOfGreenPawns.ToString(); 
-    }
-	public void RedPawnsLeft()
-	{
-		redPawnsLeftText.text = gameController.numberOfRedPawns.ToString();
+        if(gameController.state == GameControllerMaster.State.placing) {
+		    greenPawnsLeftTextAndCaptured.text = gameController.numberOfGreenPawns.ToString();
+		}
+        if(gameController.state == GameControllerMaster.State.playing || gameController.state == GameControllerMaster.State.triara) {
+			greenPawnsLeftTextAndCaptured.text = gameController.numberOfPawnsGreenCaptured.ToString();
+		}
+
 	}
+	public void RedPawnsCounter()
+	{
+	
+		if (gameController.state == GameControllerMaster.State.placing) {
+			redPawnsLeftTextAndCaptured.text = gameController.numberOfRedPawns.ToString();
+		}
+		if (gameController.state == GameControllerMaster.State.playing || gameController.state == GameControllerMaster.State.triara) {
+			redPawnsLeftTextAndCaptured.text = gameController.numberOfPawnsRedCaptured.ToString();
+		}
+	}
+
+
+
 }

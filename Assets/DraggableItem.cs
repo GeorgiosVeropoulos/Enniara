@@ -52,8 +52,6 @@ public class DraggableItem : MonoBehaviour ,IBeginDragHandler, IDragHandler, IEn
             return;
 
 		lastSlot = this.transform.parent.GameObject();
-
-		//Debug.Log("BEGIN DRAG");
 		parentAfterDrag = transform.parent;
 		transform.SetParent(transform.root);
 		transform.SetAsLastSibling();
@@ -69,15 +67,16 @@ public class DraggableItem : MonoBehaviour ,IBeginDragHandler, IDragHandler, IEn
 			return;
 		if (colorofPiece == ColorofPiece.Green && gameControllerMaster.side != GameControllerMaster.Side.Green)
 			return;
-		//Debug.Log("DRAGGING");
-        transform.position = eventData.position;
+
+		transform.position = eventData.position;
+			
 	}
 
     public void OnEndDrag(PointerEventData eventData)
     {
 		if (gameControllerMaster.state != GameControllerMaster.State.playing)
 			return;
-		
+
 		transform.SetParent(parentAfterDrag);
 
 		afterSlot = parentAfterDrag.gameObject;
@@ -89,9 +88,12 @@ public class DraggableItem : MonoBehaviour ,IBeginDragHandler, IDragHandler, IEn
 
     public void OnPointerDown(PointerEventData eventData)
     {
-		gridSlot = transform.GetComponentInParent<GridSlot>();
-		placesItCanBeDragged = gridSlot.positionsItCanMove;
-		
+		// this ensures the pawn doesnt move when the wrong player touches it.
+		if (gameControllerMaster.side.ToString() == this.colorofPiece.ToString()) {
+			gridSlot = transform.GetComponentInParent<GridSlot>();
+			placesItCanBeDragged = gridSlot.positionsItCanMove;
+		}
+			
 		
 	}
 }

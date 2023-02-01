@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using System.Linq;
+using TMPro;
 
 public class GameControllerMaster : MonoBehaviour
 {
@@ -30,6 +31,9 @@ public class GameControllerMaster : MonoBehaviour
     public int numberOfRedPawns = 9;
     public int numberOfGreenPawns = 9;
 
+    public int numberOfPawnsRedCaptured = 0;
+    public int numberOfPawnsGreenCaptured = 0;
+
     public bool canKill = true;
 
     public GameObject[] positionsOfButtons;
@@ -37,6 +41,7 @@ public class GameControllerMaster : MonoBehaviour
     public bool redDidTriara;
     public bool greenDidTriara;
     
+
 
 	// Start is called before the first frame update
 	void Start()
@@ -65,12 +70,42 @@ public class GameControllerMaster : MonoBehaviour
 	public void GreenPawnsMinusOne()
 	{
 		numberOfGreenPawns--;
-		uihandler.GreenPawnsLeft();
+		uihandler.GreenPawnsCounter();
 	}
 	public void RedPawnsMinusOne()
 	{
 		numberOfRedPawns--;
-        uihandler.RedPawnsLeft();
+        uihandler.RedPawnsCounter();
+	}
+    public void PawnsCapturedByGreen() {
+        numberOfPawnsGreenCaptured++;
+        uihandler.GreenPawnsCounter();
+    }
+    public void PawnsCapturedByRed() {
+        numberOfPawnsRedCaptured++;
+        uihandler.RedPawnsCounter();
+    }
+
+    public void CheckWinner() {
+        if(numberOfPawnsRedCaptured == 9) {
+			uihandler.StateGameObject.GetComponent<TextMeshProUGUI>().fontSize = 200;
+			uihandler.StateGameObject.GetComponent<TextMeshProUGUI>().text = "RED WINS";
+			uihandler.StatePopUp(1);
+        }
+        if (numberOfPawnsGreenCaptured == 9) {
+            uihandler.StateGameObject.GetComponent<TextMeshProUGUI>().fontSize = 200;
+			uihandler.StateGameObject.GetComponent<TextMeshProUGUI>().text = "GREEN WINS";
+			uihandler.StatePopUp(1);
+		}
+    }
+
+    public void CheckToChangeToPlaying() {
+		if (numberOfRedPawns == 0 && numberOfGreenPawns == 0)
+		{
+			state = GameControllerMaster.State.playing;
+            uihandler.ChangeInformationText();
+			return;
+		}
 	}
 
 	public void CheckTriara(GameObject[] firstTriara, GameObject[] secondTriara, DraggableItem.ColorofPiece color)
@@ -93,7 +128,7 @@ public class GameControllerMaster : MonoBehaviour
 			if (Triliza == 3)
 			{
 				state = GameControllerMaster.State.triara;
-				uihandler.TriaraPopUp(1.1f);
+				uihandler.StatePopUp(1.1f);
 				//Debug.Log("TRILIZA");
 				if (color.ToString() == "Red")
 				{
