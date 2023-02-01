@@ -106,28 +106,30 @@ public class GridSlot : MonoBehaviour, IDropHandler, IPointerClickHandler
             if(gameControllerMaster.redDidTriara == true && 
                 this.gameObject.GetComponentInChildren<DraggableItem>().colorofPiece != DraggableItem.ColorofPiece.Red)
             {
-
-                Destroy(this.gameObject.transform.GetChild(0).gameObject);
-                gameControllerMaster.redDidTriara = false;
-				gameControllerMaster.state = GameControllerMaster.State.playing;
+				ThingsToCallAfterTriara();
+				gameControllerMaster.redDidTriara = false;
                 gameControllerMaster.PawnsCapturedByRed();
-				gameControllerMaster.ChangeSide();
 			}
             if(gameControllerMaster.greenDidTriara == true &&
 				this.gameObject.GetComponentInChildren<DraggableItem>().colorofPiece != DraggableItem.ColorofPiece.Green)
             {
-				Destroy(this.gameObject.transform.GetChild(0).gameObject);
+				ThingsToCallAfterTriara();
 				gameControllerMaster.greenDidTriara = false;
-				gameControllerMaster.state = GameControllerMaster.State.playing;
 				gameControllerMaster.PawnsCapturedByGreen();
-				gameControllerMaster.ChangeSide();
 			}
 
-            gameControllerMaster.uihandler.StatePopUp(0);
+            
             gameControllerMaster.CheckWinner();
         }
 
 	} 
 
-    
+    public void ThingsToCallAfterTriara() {
+		Destroy(this.gameObject.transform.GetChild(0).gameObject);
+		gameControllerMaster.state = GameControllerMaster.State.playing;
+		gameControllerMaster.ChangeSide();
+		gameControllerMaster.uihandler.StatePopUp(0);
+	}
+
+
 }

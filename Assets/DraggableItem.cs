@@ -88,6 +88,9 @@ public class DraggableItem : MonoBehaviour ,IBeginDragHandler, IDragHandler, IEn
 
     public void OnPointerDown(PointerEventData eventData)
     {
+		if(gameControllerMaster.state == GameControllerMaster.State.triara) {
+			return;
+		}
 		// this ensures the pawn doesnt move when the wrong player touches it.
 		if (gameControllerMaster.side.ToString() == this.colorofPiece.ToString()) {
 			gridSlot = transform.GetComponentInParent<GridSlot>();
